@@ -13,7 +13,7 @@ void run(const Vector *cities)
   
   while (1)
   {
-    cout << "\nPlease enter two airport abbreviations (XXX XXX = done): " << endl;
+    cout << "\nPlease enter two airport abbreviations (XXX XXX = done): ";
 //    printf("\nPlease enter two airport abbreviations (XXX XXX = done): ");
     cin >> airport1 >> airport2;
 //    scanf("%s %s", airport1, airport2);

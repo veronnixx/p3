@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #include <stdio.h>
@@ -58,7 +59,7 @@ int findAirport(const Vector *cities, const char *airport)
   for (int i = 0; i < cities->count; i++)
     if (isEqual(&cities->cityArray[i], &city))
       return i;
-  cout << airport << " is not a valid airport.\n" << endl;
+  cout << airport << " is not a valid airport." << endl;
   //printf("%s is not a valid airport.\n", airport);
   return -1;
 }  // findAirport()
@@ -66,6 +67,7 @@ int findAirport(const Vector *cities, const char *airport)
 
 void readAirports(Vector *cities)
 {
+
   char line[1000];
   City city;
   initialize(&city);
@@ -92,7 +94,9 @@ void readAirports(Vector *cities)
 
 void readCities(Vector *cities)
 {
-  FILE *fp = fopen("citypopulations.csv", "r");
+  ifstream fp;
+  fp.open("citypopulations.csv");
+  //FILE *fp = fopen("citypopulations.csv", "r");
   
   while(!feof(fp))
   {
@@ -103,7 +107,8 @@ void readCities(Vector *cities)
   } // while more in file
   
   cities->count--;
-  fclose(fp);
+  fp.close();
+  //fclose(fp);
 }  // readCities()
 
 
