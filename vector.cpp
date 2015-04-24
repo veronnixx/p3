@@ -1,4 +1,5 @@
-// Author: Sean Davis
+#include <iostream>
+using namespace std;
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,8 +58,8 @@ int findAirport(const Vector *cities, const char *airport)
   for (int i = 0; i < cities->count; i++)
     if (isEqual(&cities->cityArray[i], &city))
       return i;
-  
-  printf("%s is not a valid airport.\n", airport);
+  cout << airport << " is not a valid airport.\n" << endl;
+  //printf("%s is not a valid airport.\n", airport);
   return -1;
 }  // findAirport()
 

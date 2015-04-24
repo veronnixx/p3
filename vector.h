@@ -1,6 +1,5 @@
 #ifndef VECTOR_H
 #define	VECTOR_H
-// Author Sean Davis
 
 #include "city.h"
 

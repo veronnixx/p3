@@ -1,4 +1,6 @@
-// Author: Sean Davis
+#include <iostream>
+using namespace std;
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -35,9 +37,9 @@ void calcDistance(const City *city1, const City *city2)
   
   if (distance < 100)
     passengers = 0;
-
-  printf("%d passengers fly the %d miles from\n%s,%s to %s,%s\n", passengers,
-    distance, city1->name, city1->state, city2->name, city2->state);
+  cout << passengers << " passengers fly the " << distance << " miles from\n" << city1->name << "," << city1->state << " to " << city2->name << "," << city2->state << endl;
+  //printf("%d passengers fly the %d miles from\n%s,%s to %s,%s\n", passengers,
+  //  distance, city1->name, city1->state, city2->name, city2->state);
   
 }  // calcDistance())
 
