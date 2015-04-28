@@ -1,10 +1,8 @@
 #include <iostream>
-using namespace std; 
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include "vector.h"
+using namespace std; 
 
 void run(const Vector *cities)
 {
@@ -14,10 +12,8 @@ void run(const Vector *cities)
   while (1)
   {
     cout << "\nPlease enter two airport abbreviations (XXX XXX = done): ";
-//    printf("\nPlease enter two airport abbreviations (XXX XXX = done): ");
     cin >> airport1 >> airport2;
-//    scanf("%s %s", airport1, airport2);
-    
+
     if (strcmp(airport1, "XXX") == 0 && strcmp(airport2, "XXX") == 0)
       break;
     
@@ -33,12 +29,10 @@ void run(const Vector *cities)
 int main(int argc, char** argv) 
 {
   Vector cities;
-  initialize(&cities);
-  readCities(&cities);
-  readAirports(&cities);
-  cleanCities(&cities);
+  cities.readCities();
+  cities.readAirports();
+  cities.cleanCities();
   run(&cities);
-  deallocate(&cities);
   return 0;
 } // main()
 

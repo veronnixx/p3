@@ -1,47 +1,42 @@
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+#include <cstring>
+#include "city.h"
 using namespace std;
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "vector.h"
-
-void initialize(Vector *cities)
+Vector::Vector()
 {
-  cities->size = 10;
-  cities->count = 0;
-  cities->cityArray = (City*) malloc(cities->size * sizeof(City));
+  size = 10;
+  count = 0;
+  cityArray = new City [size];
   
-  for (int i = 0; i < cities->size; i++)
-    initialize(&cities->cityArray[i]);
-}  // initialize()
+  for (int i = 0; i < size; i++)
+  initialize(&cityArray[i]);
+}
 
-
-void deallocate(Vector *cities)
+~Vector::Vector(cities)
 {
-  for (int i = 0; i < cities->count; i++)
-    deallocate(&cities->cityArray[i]);
-  
-  free(cities->cityArray);
-}  // deallocate())
+  for (int i = 0; i < count; i++)
+    ::deallocate(&cityArray[i]);
+  delete[] cityArray;
+}
 
-
-void calcDistance(const Vector *cities, int index1, int index2)
+void Vector::calcDistance(cities, int index1, int index2) const
 {
-  calcDistance(&cities->cityArray[index1], &cities->cityArray[index2]);
+  ::calcDistance(&cityArray[index1], &cityArray[index2]);
 }  // calcDistance()
 
-void cleanCities(Vector *cities)
+void Vector::cleanCities(cities)
 {
   int i = 0;
   
-  while (i < cities->count)
+  while (i < count)
   {
-    if (!hasAirport(&cities->cityArray[i]))
+    if (!hasAirport(&cityArray[i]))
     {
-      deallocate(&cities->cityArray[i]);
-      cities->cityArray[i] = cities->cityArray[--cities->count];
+      deallocate(&cityArray[i]);
+      cityArray[i] = cityArray[--count];
     }  // if city does not have an airport
     else // city has an airport
       i++;
@@ -49,40 +44,39 @@ void cleanCities(Vector *cities)
 }  // cleanCities())
 
 
-int findAirport(const Vector *cities, const char *airport)
+int Vector::findAirport(cities, char *airport) const
 {
   City city;
   
   initialize(&city);
   setAirport(&city, airport);
   
-  for (int i = 0; i < cities->count; i++)
-    if (isEqual(&cities->cityArray[i], &city))
+  for (int i = 0; i < count; i++)
+    if (isEqual(&cityArray[i], &city))
       return i;
   cout << airport << " is not a valid airport." << endl;
-  //printf("%s is not a valid airport.\n", airport);
   return -1;
 }  // findAirport()
 
 
-void readAirports(Vector *cities)
+void Vector::readAirports(cities)
 {
 
   char line[1000];
   City city;
   initialize(&city);
-  FILE *fp = fopen("airportLL.txt", "r");
+  ifstream fp("airportLL.txt");
 
-  while (fgets(line, 1000, fp))
+  while (fp.getline(line, 1000))
   {
     if (line[0] == '[')
     {
       readAirport(&city, line);
       
-      for (int i = 0; i < cities->count; i++)
-        if (isEqual(&cities->cityArray[i], &city))
+      for (int i = 0; i < count; i++)
+        if (isEqual(&cityArray[i], &city))
         {
-          copyLocation(&cities->cityArray[i], &city);
+          copyLocation(&cityArray[i], &city);
           break;
         }  // if found a matching name
       
@@ -92,41 +86,39 @@ void readAirports(Vector *cities)
 }  // readAirports()
 
 
-void readCities(Vector *cities)
+void Vector::readCities(cities)
 {
-  ifstream fp;
-  fp.open("citypopulations.csv");
-  //FILE *fp = fopen("citypopulations.csv", "r");
+  ifstream fp("citypopulations.csv");
   
-  while(!feof(fp))
+  while(!fp.eof())
   {
-    if (cities->size == cities->count)
+    if (size == count)
       resize(cities);
   
-    readCity(&cities->cityArray[cities->count++], fp);
+    readCity(&cityArray[count++], fp);
   } // while more in file
   
-  cities->count--;
+  count--;
   fp.close();
-  //fclose(fp);
 }  // readCities()
 
 
-void resize(Vector *cities)
+void Vector::resize(cities)
 {
   int i;
-  City *temp = (City*) malloc(sizeof(City) * 2 * cities->size);
+  City *temp;
+  temp = new City [2 * size];
   
-  for (i = 0; i < cities->size; i++)
-    temp[i] = cities->cityArray[i];
+  for (i = 0; i < size; i++)
+    temp[i] = cityArray[i];
   
-  cities->size *= 2;
+  size *= 2;
   
-  for (; i < cities->size; i++)
+  for (; i < size; i++)
     initialize(&temp[i]);
     
-  free(cities->cityArray);
-  cities->cityArray = temp;
+  delete[] cityArray;
+  cityArray = temp;
 }  // resize()
 
 

@@ -3,21 +3,43 @@
 
 #include "city.h"
 
-typedef struct
+class Vector
 {
   City *cityArray;
   int size;
   int count;
-} Vector;
 
-void initialize(Vector *cities);
-void deallocate(Vector *cities);
-void calcDistance(const Vector *cities, int index1, int index2);
-void cleanCities(Vector *cities);
-int findAirport(const Vector *cities, const char *airport);
-void readAirports(Vector *cities);
-void readCities(Vector *cities);
-void resize(Vector *cities);
+    void initialize();
+    void deallocate();
+    
+   
+    void resize();
+    
+  public:
+    Vector()
+    {
+        size = 10;
+        count = 0;
+        cityArray = new City [size];
+  
+        for (int i = 0; i < size; i++)
+        ::initialize(&cityArray[i]);
+    }
+    
+    ~Vector()
+    {
+       for (int i = 0; i < count; i++)
+       ::deallocate(&cityArray[i]);
+       delete[] cityArray;
+    }
+    
+    void calcDistance(int index1, int index2) const;
+    int findAirport(const char *airport) const;
+    void cleanCities();
+    void readCities();
+    void readAirports();
+    
 
+};
 #endif	// VECTOR_H 
 
